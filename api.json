@@ -1,0 +1,44 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Macbook pro",
+      "description": "this is mac pro m2 ",
+      "price": "2000",
+      "releaseDate": "2024-08-07",
+      "category": "Electronics",
+      "createdAt": "2024-08-12T03:49:58.473Z",
+      "updatedAt": "2024-08-12T04:04:34.546Z"
+    },
+    {
+      "id": "2",
+      "name": "Product2",
+      "description": "this is a product for clothes",
+      "price": 300,
+      "releaseDate": "2024-08-07",
+      "category": "clothing",
+      "createdAt": "2024-08-12T03:49:58.473Z",
+      "updatedAt": "2024-08-12T03:49:58.473Z"
+    },
+    {
+      "id": "3",
+      "name": "samsung",
+      "description": "galaxy s20 ultra",
+      "price": "1200",
+      "releaseDate": "2024-08-07",
+      "category": "phones",
+      "createdAt": "2024-08-12T03:49:58.473Z",
+      "updatedAt": "2024-08-12T03:59:03.572Z"
+    },
+    {
+      "id": "4",
+      "name": "iphone",
+      "description": "this is iphone 15",
+      "price": "1400",
+      "releaseDate": "2024-08-07",
+      "category": "phones",
+      "createdAt": "2024-08-12T03:49:58.473Z",
+      "updatedAt": "2024-08-12T03:59:47.478Z"
+    }
+  ]
+}
