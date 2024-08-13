@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { validateProduct } from '../utils/Validation';
 const CreateProductForm = ({ createProduct,updateCategories }) => {
     const [newProduct, setNewProduct] = useState({
         name: '',
@@ -20,33 +20,10 @@ const CreateProductForm = ({ createProduct,updateCategories }) => {
         setNewProduct(prev => ({ ...prev, [name]: value }));
     };
 
-    const validate = () => {
-        const errors = {};
-        if (!newProduct.name || newProduct.name.length < 5 || /\d/.test(newProduct.name)) {
-            errors.name = 'Name must be at least 5 characters long and contain no numbers';
-        }
-        if (!newProduct.description || newProduct.description.length <= 10) {
-            errors.description = 'Description must be more than 10 characters';
-        }
-        if (!newProduct.price || isNaN(newProduct.price) || newProduct.price <= 0 || newProduct.price > 10000000) {
-            errors.price = 'Price must be a positive number greater than zero and not exceed 10 million';
-        }
-        if (!newProduct.releaseDate) {
-            errors.releaseDate = 'Release Date is required';
-        } else {
-            const [year, month, day] = newProduct.releaseDate.split('-').map(Number);
-            if (year < 2007) errors.releaseDate = 'Year must be 2007 or later';
-            if (month < 1 || month > 12) errors.releaseDate = 'Month must be between 01 and 12';
-            if (day < 1 || day > 31) errors.releaseDate = 'Day must be between 01 and 31';
-        }
-        if (!newProduct.category || newProduct.category.length > 20) {
-            errors.category = 'Category must be 20 characters or less';
-        }
-        return errors;
-    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        const validationErrors = validate();
+        const validationErrors = validateProduct({ newProduct }, 'newProduct');
         if (Object.keys(validationErrors).length === 0) {
             createProduct({
                 ...newProduct,
