@@ -30,6 +30,7 @@ const ProductTable = ({ products, updateProduct, deleteProduct }) => {
 
     const handleUpdate = async (productId) => {
         const validationErrors = validateProduct({ editedProduct }, 'editedProduct');
+        
         if (Object.keys(validationErrors).length === 0) {
             const updatedProduct = {
                 ...editedProduct,
@@ -39,9 +40,18 @@ const ProductTable = ({ products, updateProduct, deleteProduct }) => {
             setEditingProduct(null);
             setErrors({});
         } else {
-            setErrors(validationErrors);
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                [productId]: validationErrors // Ensure this line correctly maps errors to the productId
+            }));
         }
     };
+    
+    
+    const handleCancelEdit = () =>{
+        setEditingProduct(null);
+        setErrors({});
+    }
 
     const handleDeleteClick = (productId) => {
         setProductToDelete(productId);
@@ -97,7 +107,7 @@ const ProductTable = ({ products, updateProduct, deleteProduct }) => {
                                 ) : (
                                     product.name
                                 )}
-                                {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+                                {errors[product.id]?.name && <p className="text-red-500 text-sm">{errors[product.id].name}</p>}
                             </td>
                             <td className="py-2 px-4 border-b">
                                 {editingProduct === product.id ? (
@@ -111,7 +121,7 @@ const ProductTable = ({ products, updateProduct, deleteProduct }) => {
                                 ) : (
                                     product.description
                                 )}
-                                {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
+                                {errors[product.id]?.description && <p className="text-red-500 text-sm">{errors[product.id].description}</p>}
                             </td>
                             <td className="py-2 px-4 border-b">
                                 {editingProduct === product.id ? (
@@ -125,7 +135,7 @@ const ProductTable = ({ products, updateProduct, deleteProduct }) => {
                                 ) : (
                                     `$${Number(product.price).toFixed(2)}`
                                 )}
-                                {errors.price && <p className="text-red-500 text-sm">{errors.price}</p>}
+                                {errors[product.id]?.price && <p className="text-red-500 text-sm">{errors[product.id].price}</p>}
                             </td>
                             <td className="py-2 px-4 border-b">
                                 {editingProduct === product.id ? (
@@ -139,7 +149,7 @@ const ProductTable = ({ products, updateProduct, deleteProduct }) => {
                                 ) : (
                                     product.releaseDate
                                 )}
-                                {errors.releaseDate && <p className="text-red-500 text-sm">{errors.releaseDate}</p>}
+                                {errors[product.id]?.releaseDate && <p className="text-red-500 text-sm">{errors[product.id].releaseDate}</p>}
                             </td>
                             <td className="py-2 px-4 border-b">
                                 {editingProduct === product.id ? (
@@ -153,7 +163,7 @@ const ProductTable = ({ products, updateProduct, deleteProduct }) => {
                                 ) : (
                                     product.category
                                 )}
-                                {errors.category && <p className="text-red-500 text-sm">{errors.category}</p>}
+                                {errors[product.id]?.category && <p className="text-red-500 text-sm">{errors[product.id].category}</p>}
                             </td>
                             <td className="py-2 px-4 border-b">
                                 {product.createdAt}
@@ -176,7 +186,7 @@ const ProductTable = ({ products, updateProduct, deleteProduct }) => {
                                         </button>
                                         <button
                                             className="bg-gray-500 text-white px-4 py-2 rounded"
-                                            onClick={() => setEditingProduct(null)}
+                                            onClick={handleCancelEdit}
                                         >
                                             Cancel
                                         </button>
